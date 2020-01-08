@@ -9,7 +9,29 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button Content="Button" Margin="584,578,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Border Background="#2f5cb6"/>
+        <Border Grid.Column ="0" Background="#1f3d7a"/>
+        <Border Grid.Column ="1" Background="#152951"/>
+        <StackPanel Grid.Column="0" Margin="40,0,0,0" VerticalAlignment="Center">
+            <ScrollViewer>
+                <StackPanel>
+                    <TextBlock Text="My Page Title" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <!-- more page content -->
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--<TextBlock Foreground="White" FontSize="25" Text="High: 66°" Margin="0,0,20,0"/>
+            <TextBlock Foreground="White" FontSize="25" Text="Low: 43°" Margin="0,0,20,0"/>
+            <TextBlock Foreground="White" FontSize="25" Text="Feels like: 63°"/>-->
+        </StackPanel>
 
     </Grid>
 </Page>
