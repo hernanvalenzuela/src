@@ -8,8 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
+    <Grid Margin="0,0,0,0">
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
@@ -19,26 +19,51 @@
         <Border Background="#2f5cb6"/>
         <Border Grid.Column ="0" Background="#1f3d7a"/>
         <Border Grid.Column ="1" Background="#152951"/>
-        <StackPanel Grid.Column="0" Margin="40,0,0,0" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0" VerticalAlignment="Center">
             <ScrollViewer>
                 <StackPanel Height="Auto">
                     <Grid Height="400">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="10"></RowDefinition>
-                            <RowDefinition Height="25"></RowDefinition>
+                            <RowDefinition Height="350"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}" />
-                        <Image  Grid.Row="1" Width="Auto" Height="Auto" Source="{Binding ImgUrl}" />
+                        --><!--<Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>--><!--
+                        <Grid Grid.Row="0" Height="50">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="ColumnTitle" Width="3*"/>
+                                <ColumnDefinition x:Name="ColumnAuthor" Width="5*"/>
+                                <ColumnDefinition x:Name="ColumnDate" Width="3*"/>
+                                <ColumnDefinition x:Name="ColumnComments" Width="5*"/>
+                                <ColumnDefinition x:Name="ColumnStatus" Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Title}" Style="{StaticResource TitleTextBlockStyle}" />
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Author}" Style="{StaticResource TitleTextBlockStyle}" />
+                            <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding EntryDate}" Style="{StaticResource TitleTextBlockStyle}" />
+                            <TextBlock Grid.Column="3" Grid.Row="0" Text="{Binding NumberOfComments}" Style="{StaticResource TitleTextBlockStyle}" />
+                            <TextBlock Grid.Column="4" Grid.Row="0" Text="{Binding Status}" Style="{StaticResource TitleTextBlockStyle}" />
+                        </Grid>
+                        <Grid Height="350" Grid.Row="1">
+                            <Button HorizontalAlignment="Stretch" Grid.Row="1" Width="Auto" Height="350" >
+                                <Grid>
+                                    <Image  Source="{Binding ImgUrl}" />
+                                </Grid>
+                            </Button>
+                        </Grid>
                     </Grid>
-                     <!-- more page content -->
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!--<TextBlock Foreground="White" FontSize="25" Text="High: 66°" Margin="0,0,20,0"/>
+            --><!--<TextBlock Foreground="White" FontSize="25" Text="High: 66°" Margin="0,0,20,0"/>
             <TextBlock Foreground="White" FontSize="25" Text="Low: 43°" Margin="0,0,20,0"/>
-            <TextBlock Foreground="White" FontSize="25" Text="Feels like: 63°"/>-->
-        </StackPanel>
+            <TextBlock Foreground="White" FontSize="25" Text="Feels like: 63°"/>--><!--
+        </StackPanel>-->
+        <Button Content="Button"  VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
 </Page>

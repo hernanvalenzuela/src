@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -36,7 +37,7 @@ namespace Reddit
         {
             Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
             var headers = httpClient.DefaultRequestHeaders;
-            Uri requestUri = new Uri("http://www.reddit.com/dev/api");
+            Uri requestUri = new Uri("https://www.reddit.com//top/.json?count=20");
             Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
             string httpResponseBody = "";
 
@@ -46,11 +47,28 @@ namespace Reddit
                 httpResponse = await httpClient.GetAsync(requestUri);
                 httpResponse.EnsureSuccessStatusCode();
                 httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
+                var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody);
             }
             catch (Exception ex)
             {
                 httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
+
+            //string provideUri = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=aaf0721010d60c8dfdd2df28ed0ac6b9&format=json&nojsoncallback=1&api_sig=ebb3b6eb5686c1c042a9f8b7d4d4cf87";
+
+            //HttpClient client = new HttpClient();
+            //string jsonstring = await client.GetStringAsync(provideUri);
+            //var obj = JsonConvert.DeserializeObject<RootObject>(jsonstring);
+            //if (obj.stat == "ok")
+            //{
+            //    FlickrGridView.ItemsSource = obj.photos.photo;
+            //}
+            //Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
+            //var headers = httpClient.DefaultRequestHeaders;
+            //Uri requestUri = new Uri("http://www.reddit.com/top");
+            ////Send the GET request
+            //string jsonstring = await httpClient.GetStringAsync(requestUri);
+            //var obj = JsonConvert.DeserializeObject<Model.RootObject>(jsonstring);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
