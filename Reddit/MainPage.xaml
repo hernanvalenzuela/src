@@ -21,9 +21,16 @@
         <Border Grid.Column ="1" Background="#152951"/>
         <StackPanel Grid.Column="0" Margin="40,0,0,0" VerticalAlignment="Center">
             <ScrollViewer>
-                <StackPanel>
-                    <TextBlock Text="My Page Title" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <!-- more page content -->
+                <StackPanel Height="Auto">
+                    <Grid Height="400">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"></RowDefinition>
+                            <RowDefinition Height="25"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}" />
+                        <Image  Grid.Row="1" Width="Auto" Height="Auto" Source="{Binding ImgUrl}" />
+                    </Grid>
+                     <!-- more page content -->
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
