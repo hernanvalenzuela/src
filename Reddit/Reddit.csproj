@@ -122,7 +122,22 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Class1.cs" />
+    <Compile Include="Model\Child.cs" />
+    <Compile Include="Model\MediaEmbed.cs" />
+    <Compile Include="Model\Data.cs" />
+    <Compile Include="Model\Data2.cs" />
+    <Compile Include="Model\Gildings.cs" />
+    <Compile Include="Model\Image.cs" />
+    <Compile Include="Model\Media.cs" />
+    <Compile Include="Model\Preview.cs" />
+    <Compile Include="Model\RedditVideo.cs" />
+    <Compile Include="Model\RedditVideo2.cs" />
+    <Compile Include="Model\Resolution.cs" />
+    <Compile Include="Model\RootObject.cs" />
+    <Compile Include="Model\SecureMedia.cs" />
+    <Compile Include="Model\SecureMediaEmbed.cs" />
+    <Compile Include="Model\Source.cs" />
+    <Compile Include="Model\Variants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
