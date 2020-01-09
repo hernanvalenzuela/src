@@ -29,6 +29,7 @@ namespace Reddit
         public MainPage()
         {
             this.InitializeComponent();
+
         }
 
         private async Task TryPostJsonAsync()

@@ -122,6 +122,16 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Child.cs" />
+    <Compile Include="Model\Data.cs" />
+    <Compile Include="Model\Data2.cs" />
+    <Compile Include="Model\Media.cs" />
+    <Compile Include="Model\MediaEmbed.cs" />
+    <Compile Include="Model\Oembed.cs" />
+    <Compile Include="Model\Oembed2.cs" />
+    <Compile Include="Model\SecureMedia.cs" />
+    <Compile Include="Model\SecureMediaEmbed.cs" />
+    <Compile Include="Model\RootObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +163,14 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="top.JSON" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
