@@ -2,6 +2,7 @@
 {
     public class SecureMedia
     {
-        public RedditVideo reddit_video { get; set; }
+        public Oembed oembed { get; set; }
+        public string type { get; set; }
     }
 }

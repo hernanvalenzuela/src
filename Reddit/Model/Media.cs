@@ -2,6 +2,7 @@
 {
     public class Media
     {
-        public RedditVideo2 reddit_video { get; set; }
+        public Oembed2 oembed { get; set; }
+        public string type { get; set; }
     }
 }

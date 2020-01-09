@@ -30,7 +30,8 @@ namespace Reddit
         public MainPage()
         {
             this.InitializeComponent();
-
+            var task = Task.Run(() => TryPostJsonAsync());
+            task.Wait();
         }
 
         private async Task TryPostJsonAsync()
@@ -48,27 +49,12 @@ namespace Reddit
                 httpResponse.EnsureSuccessStatusCode();
                 httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody);
+                gvThumbails.ItemsSource = obj.data.children;
             }
             catch (Exception ex)
             {
                 httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
-
-            //string provideUri = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=aaf0721010d60c8dfdd2df28ed0ac6b9&format=json&nojsoncallback=1&api_sig=ebb3b6eb5686c1c042a9f8b7d4d4cf87";
-
-            //HttpClient client = new HttpClient();
-            //string jsonstring = await client.GetStringAsync(provideUri);
-            //var obj = JsonConvert.DeserializeObject<RootObject>(jsonstring);
-            //if (obj.stat == "ok")
-            //{
-            //    FlickrGridView.ItemsSource = obj.photos.photo;
-            //}
-            //Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
-            //var headers = httpClient.DefaultRequestHeaders;
-            //Uri requestUri = new Uri("http://www.reddit.com/top");
-            ////Send the GET request
-            //string jsonstring = await httpClient.GetStringAsync(requestUri);
-            //var obj = JsonConvert.DeserializeObject<Model.RootObject>(jsonstring);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
