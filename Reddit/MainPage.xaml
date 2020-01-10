@@ -8,18 +8,32 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Margin="0,0,0,0">
+
+    <Grid Margin="0,0,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="500"></RowDefinition>
+            </Grid.RowDefinitions>
+            <GridView Grid.Row="1" x:Name="gvthumbails" Margin="0,0,0,0"  >
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Image  x:Name="ImageThumbails" Width="150" Source="{ Binding img }"  HorizontalAlignment="Center"></Image>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+              
+            </GridView> 
+        </Grid>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Border Background="#2f5cb6"/>
         <Border Grid.Column ="0" Background="#1f3d7a"/>
         <Border Grid.Column ="1" Background="#152951"/>
-
             <ScrollViewer x:Name="svReddit" Width="400" Height="Auto" Background="LightGray" Grid.Column="0" VerticalAlignment="Center">
             <GridView x:Name="gvThumbails" >
                 <StackPanel Height="Auto" x:Name="spthumbails">
@@ -60,12 +74,10 @@
             </StackPanel>
             </GridView>
         </ScrollViewer>
-
         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <GridView x:Name="prueba" >
                 
             </GridView>
-        </StackPanel>
-
+        </StackPanel>-->
     </Grid>
 </Page>

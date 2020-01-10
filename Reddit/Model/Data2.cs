@@ -37,11 +37,11 @@ namespace Reddit.Model
         public string name { get; set; }
         public string permalink { get; set; }
         public bool stickied { get; set; }
-        public int created { get; set; }
+        public decimal created { get; set; }
         public string url { get; set; }
         public object author_flair_text { get; set; }
         public string title { get; set; }
-        public int created_utc { get; set; }
+        public decimal created_utc { get; set; }
         public int ups { get; set; }
         public int num_comments { get; set; }
         public bool visited { get; set; }

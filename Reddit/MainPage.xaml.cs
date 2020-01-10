@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -48,8 +49,14 @@ namespace Reddit
                 httpResponse = await httpClient.GetAsync(requestUri);
                 httpResponse.EnsureSuccessStatusCode();
                 httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
-                var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody);
-                gvThumbails.ItemsSource = obj.data.children;
+                var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody, new JsonSerializerSettings() { Culture = CultureInfo.CurrentCulture });
+                var list = (from r in obj.data.children
+                            select new { ImgUrl = r.data.thumbnail }).ToList();
+
+                await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        gvthumbails.ItemsSource = list;
+                    });
             }
             catch (Exception ex)
             {
