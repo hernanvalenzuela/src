@@ -123,6 +123,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Child.cs" />
+    <Compile Include="Model\ItemReddit.cs" />
     <Compile Include="Model\MediaEmbed.cs" />
     <Compile Include="Model\Data.cs" />
     <Compile Include="Model\Data2.cs" />
