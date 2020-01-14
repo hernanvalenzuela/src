@@ -32,45 +32,13 @@ namespace Reddit
     /// 
     public sealed partial class MainPage : Page
     {
-        public ObservableCollection<ItemReddit> CollectionItemsReddit { get; set; }
+        public ObservableCollection<Data2> CollectionItemsReddit { get; set; }
         public MainPage()
         {
             this.InitializeComponent();
             var task = Task.Run(() => TryPostJsonAsync());
             task.Wait();
             // ReadData();
-        }
-
-        private void ReadData()
-        {
-
-            Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
-            var headers = httpClient.DefaultRequestHeaders;
-            Uri requestUri = new Uri("https://www.reddit.com//top/.json?count=20");
-            Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
-            string httpResponseBody = "";
-            try
-            {
-                //Send the GET request
-                httpResponse = httpClient.GetAsync(requestUri).GetResults();
-                if (httpResponse.IsSuccessStatusCode)
-                {
-                    httpResponseBody = httpResponse.Content.ReadAsStringAsync().GetResults();
-
-                    var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody, new JsonSerializerSettings() { Culture = CultureInfo.CurrentCulture });
-                    var list = (from r in obj.data.children
-                                select new { ImgUrl = r.data.thumbnail,
-                                    Title = r.data.title,
-                                    Author = r.data.author,
-                                    NumberOfComments = r.data.num_comments
-                                }).ToList().Take(1);
-                    gvthumbails.ItemsSource = list;
-                }
-            }
-            catch (Exception ex)
-            {
-                httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
-            }
         }
         private async Task TryPostJsonAsync()
         {
@@ -87,15 +55,11 @@ namespace Reddit
                 httpResponse.EnsureSuccessStatusCode();
                 httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody, new JsonSerializerSettings() { Culture = CultureInfo.CurrentCulture });
-                CollectionItemsReddit = new ObservableCollection<ItemReddit>( (from r in obj.data.children
-                            select new ItemReddit { ImgUrl = r.data.thumbnail,
-                                Title = r.data.title,
-                                Author = r.data.author,
-                                NumberOfComments = r.data.num_comments
-                            }).ToList());
+                CollectionItemsReddit = new ObservableCollection<Data2>((from r in obj.data.children
+                                                                         select r.data).ToList());
 
 
-               // gvthumbails.ItemsSource = CollectionItemsReddit;
+                // gvthumbails.ItemsSource = CollectionItemsReddit;
 
                 //await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 // {
@@ -114,6 +78,22 @@ namespace Reddit
             var task = Task.Run(() => TryPostJsonAsync());
             task.Wait();
 
+        }
+
+        private void gvthumbails_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void gvthumbails_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as GridView).SelectedIndex != null)
+            {
+                var it = CollectionItemsReddit[int.Parse((sender as GridView).SelectedIndex.ToString())];
+                imageSelected.UriSource = new Uri( it.thumbnail);
+                authoSelected.Text = it.author;
+                selftextSelected.Text = it.title;
+            }
         }
     }
 }
