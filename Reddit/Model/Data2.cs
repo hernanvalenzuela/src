@@ -2,7 +2,7 @@
 
 namespace Reddit.Model
 {
-    public class Data2
+    public partial class Data2
     {
         public string domain { get; set; }
         public object banned_by { get; set; }

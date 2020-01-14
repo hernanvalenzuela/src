@@ -6,22 +6,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    
+>
 
-    <Grid Margin="0,0,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="Auto" Width="Auto">
+    <Grid Width="auto" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" >
-            <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Width="auto" >
-                <GridView Grid.Row="1" x:Name="gvthumbails" Height="auto" Background="LightGray"  ItemsSource="{x:Bind CollectionItemsReddit}" SelectionChanged="gvthumbails_SelectionChanged">
-                    <GridView.ItemTemplate>
+        <Grid Grid.Column="0" Grid.ColumnSpan="1" >
+            <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" Width="auto" >
+                <ListView Grid.Row="1" x:Name="gvthumbails" Height="auto" Background="LightGray"  ItemsSource="{x:Bind CollectionItemsReddit}" SelectionChanged="gvthumbails_SelectionChanged">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Left" Width="auto" VerticalAlignment="Stretch">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100"></RowDefinition>
-                                    <RowDefinition Height="200"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" Width="auto">
                                     <Grid.ColumnDefinitions>
@@ -34,18 +37,18 @@
                                     <TextBlock Grid.Column="0" Grid.Row="0" Foreground="Red" Text="{Binding author}"  Width="auto" FontSize="16" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left" />
                                     <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding created_utc}" Width="auto"  />
                                 </Grid>
-                                <Grid HorizontalAlignment="Left" Grid.Row="1" >
+                                <Grid HorizontalAlignment="Left" Grid.Row="1" Margin="0,0,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="10*" />
                                         <ColumnDefinition Width="20*" />
                                     </Grid.ColumnDefinitions>
-                                        <Image  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <Image.Source >
-                                                <BitmapImage UriSource="{Binding thumbnail}" />
-                                            </Image.Source>
-                                        </Image>
-                                        <TextBlock Grid.Column="1" Text="{Binding title}" HorizontalAlignment="Left"  VerticalAlignment="Center"
-                                                Width="AUTO"
+                                    <Image  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Image.Source >
+                                            <BitmapImage UriSource="{Binding thumbnail}" />
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock Grid.Column="1" Text="{Binding title}" HorizontalAlignment="Left"  VerticalAlignment="Center"
+                                                Width="auto"
                                                 TextWrapping="Wrap" 
                                                 TextTrimming="WordEllipsis" 
                                                 FontSize="18" 
@@ -55,10 +58,21 @@
                                                 FontStyle="Italic" 
                                                 MaxHeight="84"/>
                                 </Grid>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*"></ColumnDefinition>
+                                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Height="39" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" BorderThickness="0">
+                                        <Image Source="Assets/Delete.png" Stretch="None"/>
+                                    </Button>
+                                    <TextBlock Text=  "{Binding StringComments}"  FontSize="16" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left" Grid.Column="1" ></TextBlock>
+                                    <Line ></Line>
+                                </Grid>
                             </Grid>
                         </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                    </ListView.ItemTemplate>
+                </ListView>
             </ScrollViewer>
         </Grid>
         <StackPanel Grid.Column="1">
@@ -74,7 +88,8 @@
                         <BitmapImage x:Name="imageSelected"/>
                     </Image.Source>
                 </Image>
-                <TextBlock Grid.Row="2" x:Name="selftextSelected"  FontSize="24" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left"  ></TextBlock>
+                <TextBlock Grid.Row="2" x:Name="selftextSelected" Margin="10,10,0,0" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left"   
+                           Width="auto" TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="18" LineStackingStrategy="BlockLineHeight" LineHeight="28" MaxHeight="84"></TextBlock>
             </Grid>
         </StackPanel>
     </Grid>

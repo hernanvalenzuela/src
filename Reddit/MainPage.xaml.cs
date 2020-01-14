@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using Reddit.Model;
+using Windows.UI.ViewManagement;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,6 +37,8 @@ namespace Reddit
         public MainPage()
         {
             this.InitializeComponent();
+            //ApplicationView.PreferredLaunchViewSize = new Size(800, 1600);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             var task = Task.Run(() => TryPostJsonAsync());
             task.Wait();
             // ReadData();
@@ -44,7 +47,7 @@ namespace Reddit
         {
             Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
             var headers = httpClient.DefaultRequestHeaders;
-            Uri requestUri = new Uri("https://www.reddit.com//top/.json?count=20");
+            Uri requestUri = new Uri("https://www.reddit.com//top/.json");
             Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
             string httpResponseBody = "";
 
@@ -57,15 +60,6 @@ namespace Reddit
                 var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody, new JsonSerializerSettings() { Culture = CultureInfo.CurrentCulture });
                 CollectionItemsReddit = new ObservableCollection<Data2>((from r in obj.data.children
                                                                          select r.data).ToList());
-
-
-                // gvthumbails.ItemsSource = CollectionItemsReddit;
-
-                //await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                // {
-                //     gvthumbails.ItemsSource = list;
-                // }
-                // );
             }
             catch (Exception ex)
             {
@@ -87,10 +81,11 @@ namespace Reddit
 
         private void gvthumbails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((sender as GridView).SelectedIndex != null)
+            ListView lv = (sender as ListView);
+            if (lv.SelectedIndex != null)
             {
-                var it = CollectionItemsReddit[int.Parse((sender as GridView).SelectedIndex.ToString())];
-                imageSelected.UriSource = new Uri( it.thumbnail);
+                var it = CollectionItemsReddit[int.Parse(lv.SelectedIndex.ToString())];
+                imageSelected.UriSource = new Uri( it?.thumbnail);
                 authoSelected.Text = it.author;
                 selftextSelected.Text = it.title;
             }
