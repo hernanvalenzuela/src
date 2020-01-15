@@ -33,7 +33,11 @@ namespace Reddit
     /// 
     public sealed partial class MainPage : Page
     {
-        public ObservableCollection<Data2> CollectionItemsReddit { get; set; }
+        private ObservableCollection<Data2> collectionItemsReddit;
+        public ObservableCollection<Data2> CollectionItemsReddit { get { return collectionItemsReddit; } set { collectionItemsReddit = value; } }
+        private int lastestIndexSeleccion = 0;
+        private int pageSize = 20;
+        private int currentpage = 1;
         public MainPage()
         {
             this.InitializeComponent();
@@ -58,8 +62,9 @@ namespace Reddit
                 httpResponse.EnsureSuccessStatusCode();
                 httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<Model.RootObject>(httpResponseBody, new JsonSerializerSettings() { Culture = CultureInfo.CurrentCulture });
-                CollectionItemsReddit = new ObservableCollection<Data2>((from r in obj.data.children
-                                                                         select r.data).ToList());
+
+                collectionItemsReddit = new ObservableCollection<Data2>((from r in obj.data.children
+                                                                         select r.data).ToList().Take(pageSize*currentpage));
             }
             catch (Exception ex)
             {
@@ -74,21 +79,58 @@ namespace Reddit
 
         }
 
-        private void gvthumbails_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
         private void gvthumbails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView lv = (sender as ListView);
-            if (lv.SelectedIndex != null)
+            if (lv.SelectedIndex != null && lv.SelectedIndex.ToString() != "-1")
             {
-                var it = CollectionItemsReddit[int.Parse(lv.SelectedIndex.ToString())];
-                imageSelected.UriSource = new Uri( it?.thumbnail);
-                authoSelected.Text = it.author;
-                selftextSelected.Text = it.title;
+                lastestIndexSeleccion = int.Parse(lv.SelectedIndex.ToString());
+                var it = collectionItemsReddit[lastestIndexSeleccion];
+                imageSelected.UriSource = it?.thumbnail == "default" ? null : new Uri(it?.thumbnail);
+                authoSelected.Text = it?.author;
+                selftextSelected.Text = it?.title;
+
+            }
+            else if (lv.SelectedIndex != null && lv.SelectedIndex.ToString() == "-1")
+            {
+                lastestIndexSeleccion = lastestIndexSeleccion < collectionItemsReddit.Count() ? lastestIndexSeleccion : collectionItemsReddit.Count() - 1;
+                if (collectionItemsReddit.Count() == 0)
+                {
+                    imageSelected.UriSource = null;
+                    authoSelected.Text = "";
+                    selftextSelected.Text = "";
+                }
+                else
+                {
+                    var it = collectionItemsReddit[lastestIndexSeleccion];
+                    imageSelected.UriSource = it?.thumbnail == "default" ? null : new Uri(it?.thumbnail);
+                    authoSelected.Text = it?.author;
+                    selftextSelected.Text = it?.title;
+                }
             }
         }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (((FrameworkElement)sender).DataContext != null)
+            {
+                collectionItemsReddit.Remove(((FrameworkElement)sender).DataContext as Data2);
+            }
+        }
+
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var verticalOffset = svReddit.VerticalOffset;
+            var maxVerticalOffset = svReddit.ScrollableHeight;
+            if( maxVerticalOffset > 0 &&  verticalOffset == maxVerticalOffset)
+            {
+                currentpage++;
+                var task = Task.Run(() => TryPostJsonAsync());
+                task.Wait();
+                
+            }
+
+        }
+
     }
 }

@@ -10,14 +10,31 @@
     
 >
 
+
     <Grid Width="auto" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Grid.ColumnSpan="1" >
-            <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" Width="auto" >
-                <ListView Grid.Row="1" x:Name="gvthumbails" Height="auto" Background="LightGray"  ItemsSource="{x:Bind CollectionItemsReddit}" SelectionChanged="gvthumbails_SelectionChanged">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" ></Grid>
+        <Grid Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1" >
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" Width="auto" ViewChanged="ScrollViewer_ViewChanged" x:Name="svReddit" >
+                <ListView  x:Name="gvthumbails" Height="auto" Background="LightGray"  ItemsSource="{x:Bind CollectionItemsReddit}" SelectionChanged="gvthumbails_SelectionChanged" Opacity="0.8">
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="True" 
+                                 FromVerticalOffset="0" 
+                                 FromHorizontalOffset="200" />
+                            <AddDeleteThemeTransition  />
+
+                            <NavigationThemeTransition  />
+                            <ContentThemeTransition />
+                        </TransitionCollection>
+                    </ListView.ItemContainerTransitions>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Left" Width="auto" VerticalAlignment="Stretch">
@@ -63,10 +80,10 @@
                                         <ColumnDefinition Width="6*"></ColumnDefinition>
                                         <ColumnDefinition Width="4*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Button  Grid.Column="0" Height="39" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" BorderThickness="0">
+                                    <Button  Grid.Column="0" Height="39" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" BorderThickness="0" x:Name="btnRemove"  Click="btnRemove_Click">
                                         <Image Source="Assets/Delete.png" Stretch="None"/>
                                     </Button>
-                                    <TextBlock Text=  "{Binding StringComments}"  FontSize="16" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left" Grid.Column="1" ></TextBlock>
+                                    <TextBlock Text=  "{Binding StringComments}"  FontSize="16" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Right" Grid.Column="1" ></TextBlock>
                                     <Line ></Line>
                                 </Grid>
                             </Grid>
@@ -75,15 +92,22 @@
                 </ListView>
             </ScrollViewer>
         </Grid>
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition IsStaggeringEnabled="True" 
+                                 FromVerticalOffset="0" 
+                                 FromHorizontalOffset="200"/>
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
             <Grid  Height="auto" Width="auto">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*" MaxHeight="200"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" x:Name="authoSelected"  FontSize="24" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left"  ></TextBlock>
-                <Image  Grid.Row="1"  HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Image  Grid.Row="1"  HorizontalAlignment="Left" VerticalAlignment="Center" >
                     <Image.Source >
                         <BitmapImage x:Name="imageSelected"/>
                     </Image.Source>
