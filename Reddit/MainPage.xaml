@@ -23,7 +23,7 @@
         <Grid Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" ></Grid>
         <Grid Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1" >
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" Width="auto" ViewChanged="ScrollViewer_ViewChanged" x:Name="svReddit" >
-                <ListView  x:Name="gvthumbails" Height="auto" Background="LightGray"  ItemsSource="{x:Bind CollectionItemsReddit}" SelectionChanged="gvthumbails_SelectionChanged" Opacity="0.8">
+                <ListView  x:Name="gvthumbails" Height="auto" Background="LightGray"  ItemsSource="{x:Bind CollectionData2}" SelectionChanged="gvthumbails_SelectionChanged" Opacity="0.8">
                     <ListView.ItemContainerTransitions>
                         <TransitionCollection>
                             <EntranceThemeTransition IsStaggeringEnabled="True" 
