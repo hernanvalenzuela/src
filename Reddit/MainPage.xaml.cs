@@ -44,17 +44,33 @@ namespace Reddit
             set { collectionItemsData2 = value; }
         }
         private int lastestIndexSeleccion = 0;
-        private int pageSize = 20;
+        private int pageSize = 10;
         private int currentpage = 1;
         public MainPage()
         {
             this.InitializeComponent();
-            ApplicationView.PreferredLaunchViewSize = new Size(800, 1600);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            //this.SizeChanged += GroupItemsPage_SizeChange;
             var task = Task.Run(() => TryPostJsonAsync());
             task.Wait();
-            // ReadData();
+            lbPageSize.SelectionChanged += lbPageSize_SelectionChanged;
         }
+
+        //private void GroupItemsPage_SizeChange(object sender, SizeChangedEventArgs e)
+        //{
+        //    if (e.NewSize.Width < 500)
+        //    {
+        //        VisualStateManager.GoToState(this, "MinimalLayaout", true);
+        //    }
+        //    else if (e.NewSize.Width < e.NewSize.Height)
+        //    {
+        //        VisualStateManager.GoToState(this, "PortraitLayout", true);
+        //    }
+        //    else
+        //    {
+        //        VisualStateManager.GoToState(this, "DefaultLayaout", true);
+        //    }
+        //}
+
         //this method get json data from page and save those at observablecolletion
         private async Task TryPostJsonAsync()
         {
@@ -119,9 +135,9 @@ namespace Reddit
             {
                 collectionItemsData2.Remove(((FrameworkElement)sender).DataContext as Data2);
                 //when remove elements perhaps currentpage index maybe lost a current paging reference
-                if( Math.Ceiling( (decimal)collectionItemsData2.Count() / (decimal) pageSize) < currentpage)
+                if (Math.Ceiling((decimal)collectionItemsData2.Count() / (decimal)pageSize) < currentpage)
                 {
-                    currentpage = (int) Math.Ceiling((decimal) collectionItemsData2.Count() / (decimal)pageSize);
+                    currentpage = (int)Math.Ceiling((decimal)collectionItemsData2.Count() / (decimal)pageSize);
                 }
             }
         }
@@ -144,6 +160,12 @@ namespace Reddit
                     task.Wait();
                 }
             }
+        }
+
+        private void lbPageSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            pageSize = int.Parse(((sender as ComboBox).SelectedItem as ComboBoxItem).Content.ToString());
+            gvthumbails.ItemsSource = CollectionData2;
         }
     }
 }
