@@ -38,7 +38,6 @@ namespace Reddit
         {
             get
             {
-
                 return new ObservableCollection<Data2>(collectionItemsData2.Take(pageSize * currentpage).Cast<Data2>());
             }
             set { collectionItemsData2 = value; }

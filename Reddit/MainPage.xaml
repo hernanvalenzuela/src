@@ -12,6 +12,7 @@
     Width="1200"
     Height="800"
 >
+
     <Grid  Background="LightGray" MinWidth="1200" MinHeight="800">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -21,18 +22,17 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" >
-
-        </Grid>
-        <Grid Grid.Row="0"  Grid.Column="1">
-            <ComboBox x:Name="lbPageSize"  VerticalAlignment="Center" Width="162" SelectedIndex="0" Margin="400,0,0,0">
-                <ComboBoxItem Content="10"></ComboBoxItem>
-                <ComboBoxItem Content="20"></ComboBoxItem>
-                <ComboBoxItem Content="30"></ComboBoxItem>
-            </ComboBox>
-        </Grid>
-        <ScrollViewer MinWidth="600"  Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" ViewChanged="ScrollViewer_ViewChanged" x:Name="svReddit" HorizontalAlignment="Left" >
-            <ListView   x:Name="gvthumbails"    ItemsSource="{x:Bind CollectionData2}" SelectionChanged="gvthumbails_SelectionChanged" Opacity="0.8">
+        <Border BorderBrush="Black" BorderThickness="2">
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0">
+                <ComboBox x:Name="lbPageSize"  VerticalAlignment="Center" Width="162" SelectedIndex="0" Margin="955,0,0,0">
+                    <ComboBoxItem Content="10"></ComboBoxItem>
+                    <ComboBoxItem Content="20"></ComboBoxItem>
+                    <ComboBoxItem Content="30"></ComboBoxItem>
+                </ComboBox>
+            </Grid>
+        </Border>
+        <ScrollViewer MinWidth="600"  Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" ViewChanged="ScrollViewer_ViewChanged" x:Name="svReddit" HorizontalAlignment="Left" BorderBrush="Black">
+            <ListView   x:Name="gvthumbails"    ItemsSource="{x:Bind CollectionData2}" SelectionChanged="gvthumbails_SelectionChanged" Opacity="0.8" TabNavigation="Cycle">
                 <ListView.ItemContainerTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition IsStaggeringEnabled="True" 
@@ -43,9 +43,15 @@
                         <ContentThemeTransition />
                     </TransitionCollection>
                 </ListView.ItemContainerTransitions>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"></RowDefinition>
                                 <RowDefinition Height="8*"></RowDefinition>
@@ -60,7 +66,7 @@
                                     <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Foreground="Red" Text="{Binding author}"   FontSize="16" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left" />
-                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding created_utc}"  />
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding createdUTD}" FontSize="16" FontStretch="UltraExpanded" FontStyle="Italic" HorizontalAlignment="Left" Foreground="Brown"  />
                             </Grid>
                             <Grid HorizontalAlignment="Left" Grid.Row="1">
                                 <Grid.ColumnDefinitions>
