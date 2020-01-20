@@ -138,6 +138,7 @@ namespace Reddit
                 {
                     currentpage = (int)Math.Ceiling((decimal)collectionItemsData2.Count() / (decimal)pageSize);
                 }
+                gvthumbails.ItemsSource = CollectionData2;
             }
         }
 
